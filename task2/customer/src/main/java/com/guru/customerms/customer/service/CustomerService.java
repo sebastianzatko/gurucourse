@@ -18,7 +18,7 @@ public class CustomerService {
 
     public CustomerDto createCustomer(CustomerDto customerDTO) {
         return CustomerDto.builder()
-                .clientId(customerDTO.getClientId())
+                .clientId(UUID.randomUUID())
                 .name(customerDTO.getName())
                 .build();
     }

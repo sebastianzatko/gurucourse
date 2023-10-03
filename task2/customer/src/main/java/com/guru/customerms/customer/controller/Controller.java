@@ -2,6 +2,7 @@ package com.guru.customerms.customer.controller;
 
 import com.guru.customerms.customer.model.CustomerDto;
 import com.guru.customerms.customer.service.CustomerService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,11 @@ public class Controller {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDTO){
-        return new ResponseEntity<CustomerDto>(customerService.createCustomer(customerDTO),HttpStatus.OK);
+    public ResponseEntity createCustomer(@RequestBody CustomerDto customerDTO){
+        CustomerDto newCustomer=customerService.createCustomer(customerDTO);
+        HttpHeaders headers=new HttpHeaders();
+        headers.add("Location","/api/v1/customer"+newCustomer.getClientId().toString());
+        return new ResponseEntity(headers,HttpStatus.OK);
     }
 
     @PutMapping("/{customerId}")
